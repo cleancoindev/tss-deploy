@@ -28,6 +28,7 @@ import {DaiJoin} from "dss/join.sol";
 import {Flapper} from "dss/flap.sol";
 import {Flopper} from "dss/flop.sol";
 import {Flipper} from "dss/flip.sol";
+import {Tao} from "dss/tao.sol";
 import {Dai} from "dss/dai.sol";
 import {End} from "dss/end.sol";
 import {ESM} from "esm/ESM.sol";
@@ -67,16 +68,16 @@ contract CatFab {
 }
 
 contract DaiFab {
-    function newDai(uint chainId) public returns (Dai dai) {
-        dai = new Dai(chainId);
+    function newDai(uint chainId) public returns (Tao tao) {
+        dai = new Tao(chainId);
         dai.rely(msg.sender);
         dai.deny(address(this));
     }
 }
 
 contract DaiJoinFab {
-    function newDaiJoin(address vat, address dai) public returns (DaiJoin daiJoin) {
-        daiJoin = new DaiJoin(vat, dai);
+    function newTaoJoin(address vat, address tao) public returns (TaoJoin taoJoin) {
+        daiJoin = new TaoJoin(vat, tao);
     }
 }
 
@@ -145,8 +146,10 @@ contract DssDeploy is DSAuth {
     JugFab     public jugFab;
     VowFab     public vowFab;
     CatFab     public catFab;
-    DaiFab     public daiFab;
-    DaiJoinFab public daiJoinFab;
+    TaoFab     public taoFab;
+    DaiFab     public taoFab;
+    DaiJoinFab public taoJoinFab;
+    TaoJoinFab public taoJoinFab;
     FlapFab    public flapFab;
     FlopFab    public flopFab;
     FlipFab    public flipFab;
@@ -160,8 +163,9 @@ contract DssDeploy is DSAuth {
     Jug     public jug;
     Vow     public vow;
     Cat     public cat;
-    Dai     public dai;
-    DaiJoin public daiJoin;
+    Tao     public tao;
+    DaiJoin public taoJoin;
+    TaoJoin public taoJoin;
     Flapper public flap;
     Flopper public flop;
     Spotter public spotter;
@@ -186,8 +190,10 @@ contract DssDeploy is DSAuth {
         JugFab jugFab_,
         VowFab vowFab_,
         CatFab catFab_,
-        DaiFab daiFab_,
-        DaiJoinFab daiJoinFab_,
+        DaiFab taoFab_,
+        DaiJoinFab taoJoinFab_,
+        TaoFab taoFab_,
+        TaoJoinFab taoJoinFab_,
         FlapFab flapFab_,
         FlopFab flopFab_,
         FlipFab flipFab_,
@@ -201,8 +207,10 @@ contract DssDeploy is DSAuth {
         jugFab = jugFab_;
         vowFab = vowFab_;
         catFab = catFab_;
-        daiFab = daiFab_;
-        daiJoinFab = daiJoinFab_;
+        daiFab = taoFab_;
+        daiJoinFab = taoJoinFab_;
+        taoFab = taoFab_;
+        taoJoinFab = taoJoinFab_;
         flapFab = flapFab_;
         flopFab = flopFab_;
         flipFab = flipFab_;
@@ -230,9 +238,9 @@ contract DssDeploy is DSAuth {
         require(address(vat) != address(0), "Missing previous step");
 
         // Deploy
-        dai = daiFab.newDai(chainId);
-        daiJoin = daiJoinFab.newDaiJoin(address(vat), address(dai));
-        dai.rely(address(daiJoin));
+        dai = taoFab.newTao(chainId);
+        daiJoin = taoJoinFab.newTaoJoin(address(vat), address(tao));
+        dai.rely(address(taoJoin));
     }
 
     function deployTaxation() public auth {
@@ -306,7 +314,7 @@ contract DssDeploy is DSAuth {
     }
 
     function deployPause(uint delay, DSAuthority authority) public auth {
-        require(address(dai) != address(0), "Missing previous step");
+        require(address(tao) != address(0), "Missing previous step");
         require(address(end) != address(0), "Missing previous step");
 
         pause = pauseFab.newPause(delay, address(0), authority);
@@ -352,6 +360,7 @@ contract DssDeploy is DSAuth {
         jug.deny(address(this));
         pot.deny(address(this));
         dai.deny(address(this));
+        tao.deny(address(this));
         spotter.deny(address(this));
         flap.deny(address(this));
         flop.deny(address(this));
