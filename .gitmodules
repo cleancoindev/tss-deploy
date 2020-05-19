@@ -1,0 +1,27 @@
+[submodule "lib/ds-test"]
+	path = lib/ds-test
+	url = https://github.com/dapphub/ds-test
+[submodule "lib/ds-token"]
+	path = lib/ds-token
+	url = https://github.com/dapphub/ds-token.git
+[submodule "lib/ds-auth"]
+	path = lib/ds-auth
+	url = https://github.com/dapphub/ds-auth.git
+[submodule "lib/ds-roles"]
+	path = lib/ds-roles
+	url = https://github.com/dapphub/ds-roles.git
+[submodule "lib/ds-guard"]
+	path = lib/ds-guard
+	url = https://github.com/dapphub/ds-guard
+[submodule "lib/ds-weth"]
+	path = lib/ds-weth
+	url = https://github.com/dapphub/ds-weth
+[submodule "lib/ds-pause"]
+	path = lib/ds-pause
+	url = https://github.com/dapphub/ds-pause
+[submodule "lib/dss"]
+	path = lib/dss
+	url = https://github.com/makerdao/dss
+[submodule "lib/esm"]
+	path = lib/esm
+	url = https://github.com/makerdao/esm
